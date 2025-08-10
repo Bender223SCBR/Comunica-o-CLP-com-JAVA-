@@ -6,9 +6,9 @@ import java.sql.SQLException;
 public class DB {
 
     // Configurações do seu banco de dados
-    private static final String URL = "jdbc:mysql://localhost:3306/nome_do_seu_banco";
-    private static final String USUARIO = "seu_usuario";
-    private static final String SENHA = "sua_senha";
+    private static final String URL = "jdbc:mysql://localhost:3306/nome_banco";
+    private static final String USUARIO = "usuario";
+    private static final String SENHA = "senha";
 
     public static Connection conectar() {
         Connection conexao = null;

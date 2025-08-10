@@ -1,3 +1,4 @@
+package org.example;
 import com.sourceforge.snap7.moka7.S7Client;
 import com.sourceforge.snap7.moka7.S7;
 import java.util.Arrays;
