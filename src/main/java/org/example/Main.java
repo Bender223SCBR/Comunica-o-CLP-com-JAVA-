@@ -26,7 +26,7 @@ public class Main{
         int result;
 
         try {
-            // Conecta ao CLP
+            // Conecta o CLP
             result = client.ConnectTo(PLC_IP, RACK, SLOT);
             if (result == 0) {
                 System.out.println("Conexão com o CLP estabelecida com sucesso!");

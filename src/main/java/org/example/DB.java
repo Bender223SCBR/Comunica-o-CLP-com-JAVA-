@@ -6,19 +6,19 @@ import java.sql.SQLException;
 public class DB {
 
     // Configurações do seu banco de dados
-    private static final String URL = "jdbc:mysql://localhost:3306/nome_banco";
-    private static final String USUARIO = "usuario";
-    private static final String SENHA = "senha";
+    private static final String URL = "jdbc:mysql://localhost:3306/caldeira_dspi";
+    private static final String USUARIO = "root";
+    private static final String SENHA = ""; // Use sua senha real, se houver
 
     public static Connection conectar() {
-        Connection conexao = null;
+        Connection conexao = null; // A variável é inicializada aqui
         try {
             // Carrega o driver JDBC
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             // Estabelece a conexão com o banco de dados
             conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
-            System.out.println("Conexão com o banco de dados estabelecida com sucesso!");
+            System.out.println("Conexão com o banco de dados 'caldeira_dipi' estabelecida com sucesso!");
 
         } catch (ClassNotFoundException e) {
             System.err.println("Driver do banco de dados não encontrado.");
@@ -27,7 +27,7 @@ public class DB {
             System.err.println("Erro ao conectar com o banco de dados.");
             e.printStackTrace();
         }
-        return conexao;
+        return conexao; // A variável é retornada aqui, garantindo que sempre haja um retorno
     }
 
     public static void fecharConexao(Connection conexao) {
@@ -44,11 +44,7 @@ public class DB {
 
     public static void main(String[] args) {
         Connection conexao = DB.conectar();
-
-        // Você pode executar operações de banco de dados aqui
-        // Ex: Statement stmt = conexao.createStatement();
-        //     ResultSet rs = stmt.executeQuery("SELECT * FROM sua_tabela");
-
-        fecharConexao(conexao);
+        // Lógica para usar a conexão...
+        DB.fecharConexao(conexao);
     }
 }
