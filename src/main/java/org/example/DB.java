@@ -18,7 +18,7 @@ public class DB {
 
             // Estabelece a conexão com o banco de dados
             conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
-            System.out.println("Conexão com o banco de dados 'caldeira_dipi' estabelecida com sucesso!");
+            System.out.println("Conexão com o banco de dados 'caldeira_dspi' estabelecida com sucesso!");
 
         } catch (ClassNotFoundException e) {
             System.err.println("Driver do banco de dados não encontrado.");
