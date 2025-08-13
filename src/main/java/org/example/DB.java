@@ -9,10 +9,10 @@ import java.time.Instant;   // Import para pegar o tempo atual
 
 public class DB {
 
-    // Configurações do banco de dados
+    // Configurações do seu banco de dados
     private static final String URL = "jdbc:mysql://localhost:3306/caldeira_dspi";
     private static final String USUARIO = "root";
-    private static final String SENHA = "";
+    private static final String SENHA = ""; // Use sua senha real, se houver
 
     /**
      * Insere os dados da caldeira no banco de dados.
@@ -23,15 +23,12 @@ public class DB {
     public static void inserirLeituraCaldeira(float temperatura, double nivelLiquido, double pressao) {
         // SQL para a tabela `leituras_caldeira`, incluindo o timestamp
         String sql = "INSERT INTO leituras_caldeira (timestamp, temperatura, nivel_liquido, pressao) VALUES (?, ?, ?, ?)";
-
+        
         Connection conexao = null;
         PreparedStatement stmt = null;
 
         try {
             conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
-<<<<<<< Updated upstream
-            System.out.println("Conexão com o banco de dados 'caldeira_dspi' estabelecida com sucesso!");
-=======
             stmt = conexao.prepareStatement(sql);
 
             // Define os valores para cada '?' no comando SQL
@@ -43,7 +40,6 @@ public class DB {
             int linhasAfetadas = stmt.executeUpdate();
             System.out.println("-------------------------------------------------");
             System.out.println("BANCO DE DADOS: " + linhasAfetadas + " linha(s) adicionada(s) à tabela 'leituras_caldeira'!");
->>>>>>> Stashed changes
 
         } catch (SQLException e) {
             System.err.println("Erro ao inserir dados na tabela 'leituras_caldeira'.");
@@ -57,14 +53,4 @@ public class DB {
             }
         }
     }
-<<<<<<< Updated upstream
-
-    public static void main(String[] args) {
-        Connection conexao = DB.conectar();
-        // Lógica para usar a conexão...
-        DB.fecharConexao(conexao);
-    }
 }
-=======
-}
->>>>>>> Stashed changes
