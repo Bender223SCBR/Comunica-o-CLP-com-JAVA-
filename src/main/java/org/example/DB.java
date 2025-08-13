@@ -1,46 +1,63 @@
 package org.example;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp; // Import para usar o timestamp
+import java.time.Instant;   // Import para pegar o tempo atual
 
 public class DB {
 
-    // Configurações do seu banco de dados
+    // Configurações do banco de dados
     private static final String URL = "jdbc:mysql://localhost:3306/caldeira_dspi";
     private static final String USUARIO = "root";
-    private static final String SENHA = ""; // Use sua senha real, se houver
+    private static final String SENHA = "";
 
-    public static Connection conectar() {
-        Connection conexao = null; // A variável é inicializada aqui
+    /**
+     * Insere os dados da caldeira no banco de dados.
+     * @param temperatura O valor da temperatura.
+     * @param nivelLiquido O valor do nível do líquido.
+     * @param pressao O valor da pressão.
+     */
+    public static void inserirLeituraCaldeira(float temperatura, double nivelLiquido, double pressao) {
+        // SQL para a tabela `leituras_caldeira`, incluindo o timestamp
+        String sql = "INSERT INTO leituras_caldeira (timestamp, temperatura, nivel_liquido, pressao) VALUES (?, ?, ?, ?)";
+
+        Connection conexao = null;
+        PreparedStatement stmt = null;
+
         try {
-            // Carrega o driver JDBC
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            // Estabelece a conexão com o banco de dados
             conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
+<<<<<<< Updated upstream
             System.out.println("Conexão com o banco de dados 'caldeira_dspi' estabelecida com sucesso!");
+=======
+            stmt = conexao.prepareStatement(sql);
 
-        } catch (ClassNotFoundException e) {
-            System.err.println("Driver do banco de dados não encontrado.");
-            e.printStackTrace();
+            // Define os valores para cada '?' no comando SQL
+            stmt.setTimestamp(1, Timestamp.from(Instant.now())); // Pega o horário atual
+            stmt.setFloat(2, temperatura);
+            stmt.setDouble(3, nivelLiquido);
+            stmt.setDouble(4, pressao);
+
+            int linhasAfetadas = stmt.executeUpdate();
+            System.out.println("-------------------------------------------------");
+            System.out.println("BANCO DE DADOS: " + linhasAfetadas + " linha(s) adicionada(s) à tabela 'leituras_caldeira'!");
+>>>>>>> Stashed changes
+
         } catch (SQLException e) {
-            System.err.println("Erro ao conectar com o banco de dados.");
+            System.err.println("Erro ao inserir dados na tabela 'leituras_caldeira'.");
             e.printStackTrace();
-        }
-        return conexao; // A variável é retornada aqui, garantindo que sempre haja um retorno
-    }
-
-    public static void fecharConexao(Connection conexao) {
-        if (conexao != null) {
+        } finally {
             try {
-                conexao.close();
-                System.out.println("Conexão com o banco de dados fechada.");
+                if (stmt != null) stmt.close();
+                if (conexao != null) conexao.close();
             } catch (SQLException e) {
-                System.err.println("Erro ao fechar a conexão.");
                 e.printStackTrace();
             }
         }
     }
+<<<<<<< Updated upstream
 
     public static void main(String[] args) {
         Connection conexao = DB.conectar();
@@ -48,3 +65,6 @@ public class DB {
         DB.fecharConexao(conexao);
     }
 }
+=======
+}
+>>>>>>> Stashed changes
