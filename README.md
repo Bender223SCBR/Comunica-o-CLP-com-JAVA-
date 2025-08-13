@@ -25,6 +25,7 @@ Antes de executar o projeto, certifique-se de ter os seguintes softwares instala
 -   Apache Maven
 -   Um servidor de banco de dados MySQL (Ex: XAMPP, WAMP, Docker ou uma instalação standalone).
 -   Um CLP Siemens S7 acessível na rede pela aplicação.
+-   **Siemens TIA Portal v19** para programar o CLP.
 -   Uma IDE de sua preferência (Ex: IntelliJ IDEA, Eclipse).
 
 ## Configuração do Ambiente
@@ -63,6 +64,39 @@ As configurações principais da aplicação estão centralizadas em dois arquiv
     private static final int SLOT = 1;
     private static final int DB_NUMBER = 1; // O número do DB que será lido
     ```
+
+### 3. Configuração do CLP (TIA Portal)
+
+Este repositório inclui o projeto do TIA Portal (`.zap19`) necessário para programar o CLP e permitir a comunicação com a aplicação Java. Siga os passos abaixo para configurá-lo.
+
+**Passos:**
+
+1.  **Restaurar o Projeto:**
+    * Abra o TIA Portal.
+    * No menu superior, vá em **Project > Retrieve**.
+    * Navegue até a pasta deste repositório e selecione o arquivo `Projeto caldeira - IHM - funcional conection.zap19`.
+    * Escolha uma pasta de destino para extrair o projeto e clique em **OK**. O TIA Portal irá descompactar e abrir o projeto.
+
+2.  **Verificar os Endereços das Variáveis (Offsets):**
+    * Com o projeto aberto, na árvore de projeto à esquerda, navegue até **PLC_1 > Program blocks**.
+    * Abra o bloco de dados **"DB_DADOS_CALDEIRA" (DB1)**.
+    * Você verá a tabela com as variáveis. A coluna **"Offset"** mostra o endereço inicial (em bytes) de cada variável. É este endereço que o código Java usa para a leitura.
+
+    | Nome da Variável | Tipo de Dado | Offset | Descrição |
+    | :--------------- | :----------- | :----- | :---------- |
+    | `temperatura`    | `Real`       | `0.0`  | Temperatura da caldeira |
+    | `nivel_liquido`  | `Real`       | `4.0`  | Nível de líquido |
+    | `pressao`        | `Real`       | `8.0`  | Pressão interna |
+
+3.  **Ajustar o IP do CLP:**
+    * Na árvore do projeto, dê um duplo clique em **"Device configuration"** dentro de **PLC_1**.
+    * Selecione a CPU do CLP e, na aba de propriedades abaixo, vá para **"PROFINET interface [X1]" > "Ethernet addresses"**.
+    * Certifique-se de que o endereço IP configurado aqui é o mesmo que você definiu na variável `PLC_IP` no arquivo `Main.java` (Ex: `192.168.0.1`).
+
+4.  **Compilar e Carregar no CLP:**
+    * Com as configurações verificadas, clique com o botão direito sobre **PLC_1** na árvore de projeto.
+    * Selecione **Compile > Hardware and Software (Rebuild all)**.
+    * Após compilar sem erros, selecione **"Download to device"** para transferir o programa para o seu CLP físico.
 
 ## Como Executar
 
