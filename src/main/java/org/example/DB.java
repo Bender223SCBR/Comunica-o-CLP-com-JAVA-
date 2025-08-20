@@ -4,35 +4,26 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Timestamp; // Import para usar o timestamp
-import java.time.Instant;   // Import para pegar o tempo atual
+import java.sql.Timestamp;
+import java.time.Instant;
 
 public class DB {
 
-    // Configurações do seu banco de dados
     private static final String URL = "jdbc:mysql://localhost:3306/caldeira_dspi";
     private static final String USUARIO = "root";
     private static final String SENHA = ""; // Use sua senha real, se houver
 
-    /**
-     * Insere os dados da caldeira no banco de dados.
-     * @param temperatura O valor da temperatura.
-     * @param nivelLiquido O valor do nível do líquido.
-     * @param pressao O valor da pressão.
-     */
     public static void inserirLeituraCaldeira(float temperatura, double nivelLiquido, double pressao) {
-        // SQL para a tabela `leituras_caldeira`, incluindo o timestamp
         String sql = "INSERT INTO leituras_caldeira (timestamp, temperatura, nivel_liquido, pressao) VALUES (?, ?, ?, ?)";
-        
         Connection conexao = null;
         PreparedStatement stmt = null;
 
         try {
+            // É necessário ter o driver do MySQL no projeto para esta linha funcionar
             conexao = DriverManager.getConnection(URL, USUARIO, SENHA);
             stmt = conexao.prepareStatement(sql);
 
-            // Define os valores para cada '?' no comando SQL
-            stmt.setTimestamp(1, Timestamp.from(Instant.now())); // Pega o horário atual
+            stmt.setTimestamp(1, Timestamp.from(Instant.now()));
             stmt.setFloat(2, temperatura);
             stmt.setDouble(3, nivelLiquido);
             stmt.setDouble(4, pressao);
