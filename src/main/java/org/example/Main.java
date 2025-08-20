@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 public class Main {
 
-    private static final String PLC_IP = "192.168.0.1";
+    private static final String PLC_IP = "192.168.0.53";
     private static final int RACK = 0;
     private static final int SLOT = 1;
     private static final int DB_NUMBER = 1;
@@ -29,17 +29,26 @@ public class Main {
                 if (result == 0) {
                     System.out.println("Leitura do DB" + DB_NUMBER + " bem-sucedida.");
 
-                    // Convertendo os dados
+                    // --- Conversão dos dados lidos ---
+
+                    // Temperatura: Bytes 4, 5, 6, 7
                     byte[] realBytesTemp = {buffer[4], buffer[5], buffer[6], buffer[7]};
                     float temperaturaLida = ByteBuffer.wrap(realBytesTemp).order(ByteOrder.BIG_ENDIAN).getFloat();
 
-                    System.out.println("-------------------------------------------------");
-                    System.out.println("Valor Real Lido do CLP:");
-                    System.out.println("Temperatura (REAL): " + temperaturaLida);
+                    // Nível do Líquido: Bytes 8, 9, 10, 11
+                    byte[] realBytesNivel = {buffer[8], buffer[9], buffer[10], buffer[11]};
+                    double nivelLiquido = ByteBuffer.wrap(realBytesNivel).order(ByteOrder.BIG_ENDIAN).getFloat();
 
-                    // SUBSTITUIR ESTAS LINHAS PELA LEITURA REAL DO CLP.
-                    double nivelLiquido = 85.5;  // Valor de exemplo
-                    double pressao = 10.25;    // Valor de exemplo
+                    // Pressão: Bytes 12, 13, 14, 15
+                    byte[] realBytesPressao = {buffer[12], buffer[13], buffer[14], buffer[15]};
+                    double pressao = ByteBuffer.wrap(realBytesPressao).order(ByteOrder.BIG_ENDIAN).getFloat();
+
+
+                    System.out.println("-------------------------------------------------");
+                    System.out.println("Valores Reais Lidos do CLP:");
+                    System.out.println("Temperatura (REAL): " + temperaturaLida);
+                    System.out.println("Nível do Líquido (REAL): " + nivelLiquido);
+                    System.out.println("Pressão (REAL): " + pressao);
 
 
                     // Chamar o método do DB para inserir os dados na tabela correta
@@ -60,4 +69,5 @@ public class Main {
             }
         }
     }
+
 }
