@@ -67,7 +67,7 @@ As configurações principais da aplicação estão centralizadas em dois arquiv
 
 ### 3. Configuração do CLP (TIA Portal)
 
-Este repositório inclui o projeto do TIA Portal (`.zap19`) necessário para programar o CLP e permitir a comunicação com a aplicação Java. Siga os passos abaixo para configurá-lo.
+Este repositório inclui o projeto do TIA Portal (`Projeto caldeira Tia portal - DSPI 21.08.25 .zap19`) necessário para programar o CLP e permitir a comunicação com a aplicação Java. Siga os passos abaixo para configurá-lo.
 
 **Passos:**
 
